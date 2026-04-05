@@ -36,7 +36,7 @@ public class FA1
         s2.Transitions['0'] = dead;
         s2.Transitions['1'] = s2;
       
-        dead.Transitions['0'] = dead;
+        s0.Transitions['0'] = s2;
         dead.Transitions['1'] = dead;
     }
 

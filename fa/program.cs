@@ -14,29 +14,126 @@ namespace fans
   }
 
 
-  public class FA1
-  {
-    public bool? Run(IEnumerable<char> s)
-    {
-      return false;
-    }
-  }
+public class FA1
+{
+    State s0 = new State() { Name = "s0", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
+    State s1 = new State() { Name = "s1", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
+    State s2 = new State() { Name = "s2", IsAcceptState = true, Transitions = new Dictionary<char, State>() };
+    State dead = new State() { Name = "dead", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
 
-  public class FA2
-  {
+    State InitialState;
+
+    public FA1()
+    {
+        InitialState = s0;
+
+        //s0
+        s0.Transitions['0'] = dead;
+        s0.Transitions['1'] = s1;
+
+        //s1 
+        s1.Transitions['0'] = s2;
+        s1.Transitions['1'] = s1;
+
+        //s2
+        s2.Transitions['0'] = dead;
+        s2.Transitions['1'] = s2;
+
+        //dead
+        dead.Transitions['0'] = dead;
+        dead.Transitions['1'] = dead;
+    }
+
     public bool? Run(IEnumerable<char> s)
     {
-      return false;
+        State current = InitialState;
+        foreach (var c in s)
+        {
+            current = current.Transitions[c];
+            if (current == null)
+                return null;
+        }
+        return current.IsAcceptState;
     }
-  }
+}
+
+public class FA2
+{
+    State ee = new State() { Name = "ee", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
+    State oe = new State() { Name = "oe", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
+    State eo = new State() { Name = "eo", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
+    State oo = new State() { Name = "oo", IsAcceptState = true, Transitions = new Dictionary<char, State>() };
+
+    State InitialState;
+
+    public FA2()
+    {
+        InitialState = ee;
+
+        //ee
+        ee.Transitions['0'] = oe;
+        ee.Transitions['1'] = eo;
+
+        //oe
+        oe.Transitions['0'] = ee;
+        oe.Transitions['1'] = oo;
+
+        //eo
+        eo.Transitions['0'] = oo;
+        eo.Transitions['1'] = ee;
+
+        //oo
+        oo.Transitions['0'] = eo;
+        oo.Transitions['1'] = oe;
+    }
+
+    public bool? Run(IEnumerable<char> s)
+    {
+        State current = InitialState;
+        foreach (var c in s)
+        {
+            current = current.Transitions[c];
+            if (current == null)
+                return null;
+        }
+        return current.IsAcceptState;
+    }
+}
   
-  public class FA3
-  {
+public class FA3
+{
+    State s0 = new State() { Name = "s0", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
+    State s1 = new State() { Name = "s1", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
+    State s2 = new State() { Name = "s2", IsAcceptState = true, Transitions = new Dictionary<char, State>() };
+
+    State InitialState;
+
+    public FA3()
+    {
+        InitialState = s0;
+
+        s0.Transitions['0'] = s0;
+        s0.Transitions['1'] = s1;
+
+        s1.Transitions['0'] = s0;
+        s1.Transitions['1'] = s2;
+
+        s2.Transitions['0'] = s2;
+        s2.Transitions['1'] = s2;
+    }
+
     public bool? Run(IEnumerable<char> s)
     {
-      return false;
+        State current = InitialState;
+        foreach (var c in s)
+        {
+            current = current.Transitions[c];
+            if (current == null)
+                return null;
+        }
+        return current.IsAcceptState;
     }
-  }
+}
 
   class Program
   {

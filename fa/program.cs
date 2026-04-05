@@ -28,7 +28,7 @@ public class FA1
         InitialState = s0;
 
         // s0
-        s0.Transitions['0'] = dead;
+        s0.Transitions['0'] = s2;
         s0.Transitions['1'] = s1;
 
         // s1 (видели 1)
